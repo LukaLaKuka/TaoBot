@@ -25,7 +25,9 @@ client.on('messageCreate', (message) => {
     let regexp = new RegExp(rhytme.pattern)
     
     if (regexp.test(message.content.toLowerCase())) {
-      message.reply(rhytme.responses[0]);
+      let nRandom = Math.floor(Math.random() * rhytme.responses.length);
+
+      message.reply(rhytme.responses[nRandom]);
     }
   });
 });

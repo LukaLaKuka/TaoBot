@@ -8,12 +8,12 @@
         {
             "name" : "ocho",
             "pattern": "(?:ocho|8)\\.*$",
-            "responses": ["Por el culo te lo abrocho."]
+            "responses": ["Por el culo te lo abrocho.","Te comes un bizcoho"]
         },
         {
             "name" : "nueve",
             "pattern": "(?:nueve|9)\\.*$",
-            "responses": ["Y tu a mí me lo mueves."]
+            "responses": ["Y tu a mí me lo mueves.","Por el culo a ti te llueve","Y yo te la meto todo el jueves"]
         },
         {
             "name" : "trece",
