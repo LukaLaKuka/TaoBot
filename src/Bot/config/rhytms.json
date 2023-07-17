@@ -1,0 +1,29 @@
+{
+    "rhythms": [
+        {
+            "name" : "cinco",
+            "pattern": "(?:cinco|5)\\.*$",
+            "responses": ["Por el culo te la hinco."]
+        },
+        {
+            "name" : "ocho",
+            "pattern": "(?:ocho|8)\\.*$",
+            "responses": ["Por el culo te lo abrocho."]
+        },
+        {
+            "name" : "nueve",
+            "pattern": "(?:nueve|9)\\.*$",
+            "responses": ["Y tu a mí me lo mueves."]
+        },
+        {
+            "name" : "trece",
+            "pattern": "(?:trece|13)\\.*$",
+            "responses": ["Mientras más me la mamas más me crece."]
+        },
+        {
+            "name" : "rima",
+            "pattern": "(?:rima)\\.*$",
+            "responses": ["Y me cojo a tu prima"]
+        }
+    ]
+}
