@@ -10,18 +10,19 @@ const client = new Client({
   ]
 });
 
+
+
 client.on('ready', () => {
     console.log("TaoBot ready!")
 });
 
-client.on('messageCreate', (message) => {
+client.on('messageCreate', async (message) => {
+
+  if (message.author.bot) {
+    return ;
+  }
 
   Rhytmes.rhythms.forEach(rhytme => {
-
-    if (message.author.bot) {
-      return ;
-    }
-    
     let regexp = new RegExp(rhytme.pattern)
     
     if (regexp.test(message.content.toLowerCase())) {
@@ -29,7 +30,7 @@ client.on('messageCreate', (message) => {
 
       message.reply(rhytme.responses[nRandom]);
     }
-  });
+  })
 });
 
 client.login(config.discordToken)
