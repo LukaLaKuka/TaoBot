@@ -8,7 +8,7 @@
         {
             "name" : "ocho",
             "pattern": "(?:ocho|8)\\.*$",
-            "responses": ["Por el culo te lo abrocho.","Te comes un bizcoho"]
+            "responses": ["Por el culo te lo abrocho.","Te comes un bizcocho","Viene un indigente y te destroza el choso", "Te pesa tanto el culo que no cabe ni en un pozo"]
         },
         {
             "name" : "nueve",
@@ -23,7 +23,7 @@
         {
             "name" : "rima",
             "pattern": "(?:rima)\\.*$",
-            "responses": ["Y me cojo a tu prima"]
+            "responses": ["Y me cojo a tu prima", "Y tu cara me da grima"]
         }
     ]
 }
