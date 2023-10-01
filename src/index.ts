@@ -1,6 +1,6 @@
-const { Client, IntentsBitField } = require('discord.js')
-const config = require("./config/config.json")
-const rhytmsFunction = require('./additional_modules/rhytms');
+import { Client, IntentsBitField, Message } from "discord.js";
+import * as config from "./config/config.json"
+import rhytmsFunction from "./additional_modules/rhytms";
 const client = new Client({ 
   intents: [
     IntentsBitField.Flags.Guilds, 
@@ -16,6 +16,6 @@ client.on('ready', () => {
     console.log("TaoBot ready!")
 });
 
-client.on('messageCreate', (message) => rhytmsFunction(message));
+client.on('messageCreate', (message: Message) => rhytmsFunction(message));
 
 client.login(config.discordToken)

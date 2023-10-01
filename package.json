@@ -5,7 +5,7 @@
   "main": "./src/Bot/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch ./src/Bot/index.js"
+    "dev": "ts-node ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/Tomhuel/TaoBot/issues"
   },
-  "homepage": "https://github.com/Tomhuel/TaoBot#readme"
+  "homepage": "https://github.com/Tomhuel/TaoBot#readme",
+  "dependencies": {
+    "discord.js": "^14.11.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
 }

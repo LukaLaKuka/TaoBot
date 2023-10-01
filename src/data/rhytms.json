@@ -18,7 +18,7 @@
         {
             "name" : "trece",
             "pattern": "(?:trece|13)\\.*$",
-            "responses": ["Mientras más me la mamas más me crece."]
+            "responses": ["Mientras más me la mamas más me crece.", "Agarramela que me crece"]
         },
         {
             "name" : "rima",
