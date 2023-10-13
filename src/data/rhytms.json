@@ -1,29 +1,44 @@
-{
-    "rhythms": [
-        {
-            "name" : "cinco",
-            "pattern": "(?:cinco|5)\\.*$",
-            "responses": ["Por el culo te la hinco."]
-        },
-        {
-            "name" : "ocho",
-            "pattern": "(?:ocho|8)\\.*$",
-            "responses": ["Por el culo te lo abrocho.","Te comes un bizcocho","Viene un indigente y te destroza el choso", "Te pesa tanto el culo que no cabe ni en un pozo"]
-        },
-        {
-            "name" : "nueve",
-            "pattern": "(?:nueve|9)\\.*$",
-            "responses": ["Y tu a mí me lo mueves.","Por el culo a ti te llueve","Y yo te la meto todo el jueves"]
-        },
-        {
-            "name" : "trece",
-            "pattern": "(?:trece|13)\\.*$",
-            "responses": ["Mientras más me la mamas más me crece.", "Agarramela que me crece"]
-        },
-        {
-            "name" : "rima",
-            "pattern": "(?:rima)\\.*$",
-            "responses": ["Y me cojo a tu prima", "Y tu cara me da grima"]
-        }
-    ]
-}
+[
+    {
+        "name": "cinco",
+        "pattern": "(?:cinco|5)\\.*$",
+        "responses": [
+            "Por el culo te la hinco."
+        ]
+    },
+    {
+        "name": "ocho",
+        "pattern": "(?:ocho|8)\\.*$",
+        "responses": [
+            "Por el culo te lo abrocho.",
+            "Te comes un bizcocho",
+            "Viene un indigente y te destroza el choso",
+            "Te pesa tanto el culo que no cabe ni en un pozo"
+        ]
+    },
+    {
+        "name": "nueve",
+        "pattern": "(?:nueve|9)\\.*$",
+        "responses": [
+            "Y tu a mí me lo mueves.",
+            "Por el culo a ti te llueve",
+            "Y yo te la meto todo el jueves"
+        ]
+    },
+    {
+        "name": "trece",
+        "pattern": "(?:trece|13)\\.*$",
+        "responses": [
+            "Mientras más me la mamas más me crece.",
+            "Agarramela que me crece"
+        ]
+    },
+    {
+        "name": "rima",
+        "pattern": "(?:rima)\\.*$",
+        "responses": [
+            "Y me cojo a tu prima",
+            "Y tu cara me da grima"
+        ]
+    }
+]

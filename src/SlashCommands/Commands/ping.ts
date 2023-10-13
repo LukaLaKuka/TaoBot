@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 
-export const command = {
+export default {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Replies with a Pong"),
@@ -9,4 +9,3 @@ export const command = {
         await interaction.reply("Pong!");
     },
 }
-

@@ -1,6 +1,7 @@
-import { Client, IntentsBitField, Message } from "discord.js";
+import { Client, IntentsBitField, Message, Events } from "discord.js";
 import * as config from "./config/config.json"
-import { manage } from "./MessageCreate/manager";
+import { messageManage } from "./Events/MessageCreate/messageManager";
+import { commandLoader } from "./SlashCommands/commandManager";
 const client = new Client({ 
   intents: [
     IntentsBitField.Flags.Guilds, 
@@ -10,14 +11,23 @@ const client = new Client({
   ]
 });
 
-
+const myCommands = commandLoader();
 
 client.on('ready', () => {
-    console.log("TaoBot ready!")
+    console.log("TaoBot ready!");
+    client.application?.commands.set(myCommands.textCommands);
 });
 
-client.on('messageCreate', (message: Message) => manage(message));
+client.on(Events.InteractionCreate, interaction => {
+  if (!interaction.isChatInputCommand()) return;
+  
+  myCommands.commands.map((singleCommand: any) => {
+    if (singleCommand.data.name == interaction.commandName) {
+      singleCommand.execute(interaction);
+    }
+  })
+});
 
-client.on('interactionCreate', (interaction) => {})
+client.on('messageCreate', (message: Message) => messageManage(message));
 
 client.login(config.discordToken)
