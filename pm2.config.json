@@ -3,7 +3,7 @@
         {
             "name": "TaoBot",
             "script": "./src/index.ts",
-            "instances": 4,
+            "instances": 1,
             "interpreter": "/usr/bin/ts-node",
             "exec_mode": "cluster",
             "env": {
