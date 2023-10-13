@@ -3,10 +3,10 @@ import rhytmsFunction from "./Modules/rhytms";
 import loveUToo from "./Modules/loveUToo";
 
 
-export function messageManage(message: Message) {
+export async function messageManage(message: Message) {
     if (message.author.bot) {
         return;
     }
-    rhytmsFunction(message);
-    loveUToo(message);
+    await rhytmsFunction(message);
+    await loveUToo(message);
 }
