@@ -1,18 +1,18 @@
+import { JsonHandler } from "@tomhuel/jsonhandler";
 import { Message } from "discord.js";
+import { projectPaths } from "../../../config/projectPaths";
+import * as path from "node:path"
 
 interface Rhytm {
     pattern: string,
     responses: string[]
 }
 
-const Rhytmes = require("../../data/rhytms.json");
+const RhytmesJsonHandler = new JsonHandler(path.join(projectPaths.jsonDir, "rhytms.json"));
+const Rhytmes: Rhytm[] = RhytmesJsonHandler.getJson() as Rhytm[];
 
 async function rhytmsFunction(message: Message) {
-    if (message.author.bot) {
-        return;
-    }
-    
-    Rhytmes.rhythms.forEach((rhytme: Rhytm) => {
+    Rhytmes.forEach((rhytme: Rhytm) => {
         let regexp: RegExp = new RegExp(rhytme.pattern)
 
         if (regexp.test(message.content.toLowerCase())) {
@@ -20,7 +20,7 @@ async function rhytmsFunction(message: Message) {
 
             message.reply(rhytme.responses[nRandom]);
         }
-    })
+    });
 }
 
 export default rhytmsFunction
