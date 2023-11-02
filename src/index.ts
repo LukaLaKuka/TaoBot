@@ -1,4 +1,4 @@
-import { Client, IntentsBitField, Message, Events } from "discord.js";
+import { Client, IntentsBitField, Message, Events, Interaction } from "discord.js";
 import { config } from "@config";
 import { messageManage } from "@events";
 import { commandLoader } from "@slashcommand";
@@ -18,7 +18,7 @@ client.on('ready', () => {
   client.application?.commands.set(myCommands.textCommands);
 });
 
-client.on(Events.InteractionCreate, interaction => {
+client.on(Events.InteractionCreate, (interaction: Interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   myCommands.commands.map((singleCommand: any) => {
