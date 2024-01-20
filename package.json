@@ -4,14 +4,11 @@
   "description": "",
   "main": "./src/index.ts",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "tsnd --respawn --clear src/index.ts",
     "start": "pm2 start pm2.config.json",
     "stop": "pm2 stop pm2.config.json",
-    "reload": "pm2 reload pm2.config.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tomhuel/TaoBot.git"
+    "reload": "pm2 reload pm2.config.json",
+    "build": "rimraf ./dist && tsc"
   },
   "author": "Tomhuel",
   "license": "MIT",
@@ -22,11 +19,13 @@
   "dependencies": {
     "@tomhuel/jsonhandler": "^1.0.0",
     "discord.js": "^14.11.0",
-    "ts-node": "^10.9.1",
+    "rimraf": "^5.0.5",
     "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }

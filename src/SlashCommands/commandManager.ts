@@ -1,7 +1,18 @@
+import { SlashCommandBuilder } from "discord.js";
 import * as fs from "node:fs"
 import * as path from "node:path"
 
-export function commandLoader() {
+export interface TaoCommand {
+    data: SlashCommandBuilder;
+    execute: Function
+}
+
+export interface TaoCommandStringify {
+    commands: TaoCommand[]
+    textCommands: SlashCommandBuilder[]
+}
+
+export function commandLoader(): TaoCommandStringify {
 
     let commands: any = { commands: [], textCommands: [] };
 
