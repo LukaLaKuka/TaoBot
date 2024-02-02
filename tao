@@ -44,7 +44,7 @@ export default {
     },
 }`;
 
-const modelTemplate = (ModelName) => `export class ${ModelName} {
+const modelTemplate = (ModelName) => `export class ${ModelName}Entity {
     
     constructor() {
 
