@@ -49,7 +49,9 @@ const modelTemplate = (ModelName) => `export class ${ModelName}Entity {
     constructor() {
 
     }
-}`
+}`;
+
+const indexModelTemplate = (ModelName, ModelDir) => ``;
 
 const makeCommand = (CommandName) => {
     CommandName = CommandName.toLowerCase();

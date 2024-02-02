@@ -1,12 +1,12 @@
-import { JsonHandler } from "@tomhuel/jsonhandler";
+import { LovedUserJsonHandlerDS, LovedUserRepositoryImplementation } from "../../../Models/LovedUser";
 import { Message } from "discord.js";
-import { projectPaths } from "../../../../config/projectPaths";
-import * as path from "node:path"
 
-const lovedUsersJsonHandler = new JsonHandler(path.join(projectPaths.jsonDir, "lovedUsers.json"));
-const lovedUsers: Array<any> = lovedUsersJsonHandler.getJson() as Array<any>;
+const LovedUserRepository = new LovedUserRepositoryImplementation(
+    new LovedUserJsonHandlerDS()
+);
 
 export default async function loveUToo(message: Message) {
+    const lovedUsers = LovedUserRepository.getLovedUsers();
     for (let user of lovedUsers) {
         if (user.USER_ID == message.author.id && message.content.toLowerCase() == "te amo hu tao") {
             message.reply(`Yo también te amo a tí, ${user.name}`);

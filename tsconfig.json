@@ -9,7 +9,7 @@
     "target": "es2016",
     "module": "CommonJS",
     "rootDir": "src",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {},
     "resolveJsonModule": true,
     "outDir": "dist/",
