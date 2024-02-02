@@ -1,7 +1,7 @@
-import * as config from "./config.json"
+import { Configuration } from "./plugins/env.plugin"
 import { projectPaths } from "./projectPaths"
 
 export {
-    config,
+    Configuration,
     projectPaths
 }

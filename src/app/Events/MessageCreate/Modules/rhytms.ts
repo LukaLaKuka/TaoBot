@@ -1,6 +1,6 @@
 import { JsonHandler } from "@tomhuel/jsonhandler";
 import { Message } from "discord.js";
-import { projectPaths } from "../../../config/projectPaths";
+import { projectPaths } from "../../../../config/projectPaths";
 import * as path from "node:path"
 
 interface Rhytm {

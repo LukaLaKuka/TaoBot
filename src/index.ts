@@ -1,8 +1,8 @@
 import { Client, IntentsBitField, Message, Events, Interaction } from "discord.js";
-import { config } from "./config";
-import { messageManage } from "./EventHandler";
-import { commandLoader } from "./SlashCommands";
-import { TaoCommand, TaoCommandStringify } from "./SlashCommands/commandManager";
+import { Configuration } from "./config";
+import { messageManage } from "./app/Events";
+import { commandLoader, TaoCommand, TaoCommandStringify } from "./app/Commands";
+
 const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
@@ -32,4 +32,4 @@ client.on(Events.InteractionCreate, (interaction: Interaction) => {
 
 client.on('messageCreate', (message: Message) => messageManage(message));
 
-client.login(config.discordToken)
+client.login(Configuration.DISCORD_TOKEN);

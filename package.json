@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/index.ts",
+  "type": "module",
   "scripts": {
     "dev": "tsnd --respawn --clear src/index.ts",
-    "start": "pm2 start pm2.config.json",
+    "start": "npm run build && pm2 start pm2.config.json",
     "stop": "pm2 stop pm2.config.json",
     "reload": "pm2 reload pm2.config.json",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc && node ./src/data/copy-data.js"
   },
   "author": "Tomhuel",
   "license": "MIT",
@@ -19,11 +20,11 @@
   "dependencies": {
     "@tomhuel/jsonhandler": "^1.0.0",
     "discord.js": "^14.11.0",
-    "rimraf": "^5.0.5",
-    "tsconfig-paths": "^4.2.0"
+    "dotenv": "^16.4.1",
+    "env-var": "^7.4.1",
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"

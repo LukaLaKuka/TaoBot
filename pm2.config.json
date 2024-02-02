@@ -2,9 +2,9 @@
     "apps": [
         {
             "name": "TaoBot",
-            "script": "./src/index.ts",
+            "script": "./dist/index.js",
             "instances": 1,
-            "interpreter": "/usr/bin/ts-node",
+            "interpreter": "/usr/bin/node",
             "exec_mode": "cluster",
             "env": {
                 "NODE_ENV": "production"
