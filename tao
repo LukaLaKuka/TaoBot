@@ -1,0 +1,79 @@
+#!/bin/node
+
+const path = require('node:path');
+const fs = require('node:fs');
+const args = process.argv.splice(2);
+const pc = require('picocolors');
+
+const modelsDir = path.join(__dirname, 'src/app/Models');
+const commandsDir = path.join(__dirname, 'src/app/Commands/CommandList');
+
+const help = () => {
+    console.log(`${pc.bold('Welcome to Tao CLI. This is the list of commands avaiable:')}`);
+    console.table({
+        newModel: {
+            name: 'new Model',
+            options: 'name',
+            description: 'Creates a new Model Module',
+            example: 'new Model User'
+        },
+        newCommand: {
+            name: 'new Command',
+            options: 'name',
+            description: 'Creates a new Command',
+            example: 'new Command ping'
+        }
+    });
+}
+
+const validateNew = () => {
+    if (args[2] === undefined) {
+        console.error(pc.red(` Expected 3 args. Given ${args.length} args `));
+        process.exit();
+    }
+}
+
+const commandTemplate = (CommandName) => `import { SlashCommandBuilder } from "discord.js";
+
+export default {
+    data: new SlashCommandBuilder()
+        .setName("${CommandName}")
+        .setDescription("${CommandName}'s description"),
+    async execute(interaction: any) {
+        await interaction.reply("here is the reply");
+    },
+}`;
+
+const makeCommand = (CommandName) => {
+    CommandName = CommandName.toLowerCase();
+    fs.writeFileSync(path.join(commandsDir, `${CommandName}.ts`), commandTemplate(CommandName), { encoding: 'utf-8' });
+}
+
+const makeModel = (ModelName) => {
+    const modelDir = path.join(modelsDir, ModelName);
+    fs.mkdirSync(path.join(modelDir, 'Entity'), { recursive: true });
+    fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}.ts`), '');
+    fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
+    fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
+}
+
+if (args[0] === undefined || args[0] === 'help') {
+    help();
+}
+
+if (args[0] === 'new') {
+    validateNew();
+    switch (args[1]) {
+        case 'Model':
+            makeModel(args[2]);
+            console.log(pc.green(`${args[2]} Module created succesfully`));
+            break;
+        case 'Command':
+            makeCommand(args[2]);
+            console.log(pc.green(`${args[2]} Command created succesfully`));
+            break;
+        default:
+            console.error(pc.red(`${args[1]} is not a valid command`));
+            console.log(pc.magenta('Use "node tao help" to get the list of commands'));
+    }
+}
