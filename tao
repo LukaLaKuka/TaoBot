@@ -44,6 +44,13 @@ export default {
     },
 }`;
 
+const modelTemplate = (ModelName) => `export class ${ModelName} {
+    
+    constructor() {
+
+    }
+}`
+
 const makeCommand = (CommandName) => {
     CommandName = CommandName.toLowerCase();
     fs.writeFileSync(path.join(commandsDir, `${CommandName}.ts`), commandTemplate(CommandName), { encoding: 'utf-8' });
@@ -52,7 +59,7 @@ const makeCommand = (CommandName) => {
 const makeModel = (ModelName) => {
     const modelDir = path.join(modelsDir, ModelName);
     fs.mkdirSync(path.join(modelDir, 'Entity'), { recursive: true });
-    fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}.ts`), '');
+    fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}.ts`), modelTemplate(ModelName), { encoding: 'utf-8' });
     fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
     fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
 }
