@@ -17,7 +17,7 @@ export function commandLoader(): TaoCommandStringify {
     let commands: any = { commands: [], textCommands: [] };
 
     const commandsPath = path.join(__dirname, "CommandList");
-    const commandsFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".ts"));
+    const commandsFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".ts") || file.endsWith('.js'));
 
     for (const file of commandsFiles) {
         let filePath = path.join(commandsPath, file);
