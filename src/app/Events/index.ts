@@ -1,4 +1,4 @@
-import { messageManage } from "./MessageCreate"
+import { messageManage } from "./MessageCreate/messageManager"
 
 export {
     messageManage

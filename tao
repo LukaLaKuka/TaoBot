@@ -51,7 +51,11 @@ const modelTemplate = (ModelName) => `export class ${ModelName}Entity {
     }
 }`;
 
-const indexModelTemplate = (ModelName, ModelDir) => ``;
+const indexModelTemplate = (ModelName) => `import { ${ModelName}Entity } from "./Entity/${ModelName}";
+
+export {
+    ${ModelName}Entity,
+}`;
 
 const makeCommand = (CommandName) => {
     CommandName = CommandName.toLowerCase();
@@ -61,7 +65,8 @@ const makeCommand = (CommandName) => {
 const makeModel = (ModelName) => {
     const modelDir = path.join(modelsDir, ModelName);
     fs.mkdirSync(path.join(modelDir, 'Entity'), { recursive: true });
-    fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}.ts`), modelTemplate(ModelName), { encoding: 'utf-8' });
+    fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}Entity.ts`), modelTemplate(ModelName), { encoding: 'utf-8' });
+    fs.writeFileSync(path.join(modelDir, 'index.ts'), indexModelTemplate(ModelName), { encoding: 'utf-8' });
     fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
     fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
 }
