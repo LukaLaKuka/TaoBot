@@ -1,6 +1,6 @@
 import { Configuration } from "../config";
 import { TaoCommand, TaoCommandStringify, commandLoader } from "./Commands";
-import { Client, Events, IntentsBitField, Interaction, Message } from "discord.js";
+import { Client, Events, IntentsBitField, Interaction, Message, REST, Routes } from "discord.js";
 import { messageManage } from "./Events";
 
 
@@ -17,9 +17,16 @@ export class TaoService {
             ]
         });
 
-        client.on('ready', () => {
-            console.log("TaoBot ready!");
-            client.application?.commands.set(this.TaoCommands.textCommands);
+        const rest = new REST({ version: '10' }).setToken(Configuration.DISCORD_TOKEN);
+
+        const servers = client.guilds.cache;
+
+        client.on('ready', async () => {
+            servers.forEach((guild) => {
+                console.log(guild.name);
+                rest.put(Routes.applicationGuildCommands(Configuration.CLIENT_ID, guild.id), { body: this.TaoCommands.textCommands });
+            })
+            console.log(`${client.user?.username} ready`);
         });
 
         client.on(Events.InteractionCreate, (interaction: Interaction) => {
