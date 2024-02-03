@@ -60,7 +60,6 @@ We use the Entity just to set the entity of the model.
 Example:
 ```typescript
 export class UserEntity {
-    protected id: number;
     protected name: string;
     protected username: string;
 
