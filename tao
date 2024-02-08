@@ -33,13 +33,13 @@ const validateNew = () => {
     }
 }
 
-const commandTemplate = (CommandName) => `import { SlashCommandBuilder } from "discord.js";
+const commandTemplate = (CommandName) => `import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
         .setName("${CommandName}")
         .setDescription("${CommandName}'s description"),
-    async execute(interaction: any) {
+    async execute(interaction: ChatInputCommandInteraction) {
         await interaction.reply("here is the reply");
     },
 }`;

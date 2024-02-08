@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
     data: new SlashCommandBuilder()
         .setName("server")
         .setDescription("Replies with server's name"),
-    async execute(interaction: any) {
-        await interaction.reply(`The server's Name its: \`${interaction.member.guild.name}\``);
+    async execute(interaction: ChatInputCommandInteraction) {
+        await interaction.reply(`The server's Name its: \`${interaction.guild?.name}\``);
     },
 }

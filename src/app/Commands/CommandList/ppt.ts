@@ -1,4 +1,4 @@
-import { CommandInteractionOptionResolver, SlashCommandBuilder } from "discord.js";
+import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 type PPT = 'paper' | 'rock' | 'scissors';
 
@@ -13,8 +13,8 @@ export default {
             .addChoices({ name: 'Paper', value: 'paper' })
             .addChoices({ name: 'Scissors', value: 'scissors' })
         ),
-    async execute(interaction: any) {
-        const { options }: { options: CommandInteractionOptionResolver } = interaction;
+    async execute(interaction: ChatInputCommandInteraction) {
+        const options = interaction.options;
         const staticOptions: PPT[] = ['rock', 'paper', 'scissors'];
         const userOption = options.getString('choice');
         const botOption = (): PPT => {
