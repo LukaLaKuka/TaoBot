@@ -6,6 +6,6 @@ export default {
         .setDescription("Replies with user's name"),
     async execute(interaction: ChatInputCommandInteraction) {
         // Logic
-        await interaction.reply(`The User's Name its: ${interaction.user.username}`);
+        await interaction.reply(`The User's Name its: <@${interaction.user.id}>`);
     },
 }
