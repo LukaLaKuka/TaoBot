@@ -2,13 +2,14 @@
   "name": "taobot",
   "version": "1.0.0",
   "description": "",
+  "bin": {
+    "tao": "./tao.js"
+  },
   "main": "./src/index.ts",
   "scripts": {
     "dev": "tsnd --respawn --clear src/index.ts",
-    "start": "npm run build && pm2 start pm2.config.json",
-    "stop": "pm2 stop pm2.config.json",
-    "reload": "pm2 reload pm2.config.json",
-    "build": "rimraf ./dist && tsc && node ./src/data/copy-data.js"
+    "start": "npm run build && node ./dist/index.js",
+    "build": "rimraf ./dist && tsc"
   },
   "author": "Tomhuel",
   "license": "MIT",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/Tomhuel/TaoBot#readme",
   "dependencies": {
+    "@prisma/client": "^5.14.0",
     "@tomhuel/jsonhandler": "^1.0.0",
     "discord.js": "^14.11.0",
     "dotenv": "^16.4.1",
@@ -25,6 +27,7 @@
     "rimraf": "^5.0.5"
   },
   "devDependencies": {
+    "prisma": "^5.14.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"

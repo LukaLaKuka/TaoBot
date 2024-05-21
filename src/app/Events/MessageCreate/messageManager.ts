@@ -7,6 +7,6 @@ export async function messageManage(message: Message) {
     if (message.author.bot) {
         return;
     }
-    await rhytmsFunction(message);
-    await loveUToo(message);
+//    await loveUToo(message);
+//    await rhytmsFunction(message);
 }
