@@ -11,17 +11,46 @@ datasource db {
 }
 
 model Guild {
-  id   Int @id @default(autoincrement())
-  guild_id String @unique
-  name String
+  id           Int           @id @default(autoincrement())
+  guild_id     String        @unique
+  modules      Module[]
+  rhytms       Rhytm[]
+  belovedUsers BelovedUser[]
+}
+
+model Module {
+  id         Int     @id @default(autoincrement())
+  moduleName String
+  guilds     Guild[]
 }
 
 model Rhytm {
-  id Int @id @default(autoincrement())
+  id      Int             @id @default(autoincrement())
+  name    String          @default("")
+  pattern String
+  rhytms  RhytmResponse[]
+  guildId Int
+  guild   Guild           @relation(fields: [guildId], references: [id])
+}
 
+model RhytmResponse {
+  id       Int    @id @default(autoincrement())
+  response String
+  rhytmId  Int
+  rhytm    Rhytm  @relation(fields: [rhytmId], references: [id])
 }
 
 model BelovedUser {
-  id   String @id @unique
+  id       Int    @id @default(autoincrement())
+  userId   Int    @unique
+  user     User   @relation(fields: [guildId], references: [id])
+  userName String
+  guildId  Int
+  guild    Guild  @relation(fields: [guildId], references: [id])
 }
 
+model User {
+  id           Int           @id @default(autoincrement())
+  userId       String        @unique
+  belovedUsers BelovedUser[]
+}

@@ -44,17 +44,57 @@ export default {
     },
 }`;
 
-const modelTemplate = (ModelName) => `export class ${ModelName}Entity {
+const modelTemplate = (ModelName) => `import { Entity } from "../../../../common";
+
+export class ${ModelName}Entity extends Entity {
     
     constructor() {
-
+        super()
     }
 }`;
 
-const indexModelTemplate = (ModelName) => `import { ${ModelName}Entity } from "./Entity/${ModelName}";
+const repositoryTemplate = (ModelName) => `import { Repository } from "../../../../common";
+import { ${ModelName}Entity } from "..";
+
+export class ${ModelName}Repository extends Repository<${ModelName}Entity> {
+
+    constructor(
+        readonly ${ModelName}Datasource: Repository<${ModelName}Entity>
+    ) {
+        super()
+    }
+    
+    async getAll(): Promise<${ModelName}Entity[]> {
+        return (await this.${ModelName}Datasource.getAll());
+    }
+
+    async getById(id: string | number): Promise<${ModelName}Entity> {
+        return (await this.${ModelName}Datasource.getById(id));
+    }
+    
+    async create(entity: ${ModelName}Entity): Promise<${ModelName}Entity> {
+        return (await this.${ModelName}Datasource.create(entity));
+    }
+
+    async update(id: number | string, entity: ${ModelName}Entity): Promise<${ModelName}Entity> {
+        return (await this.${ModelName}Datasource.update(id, entity));
+    }
+
+    async delete(entity: ${ModelName}Entity): Promise<boolean> {
+        return (await this.${ModelName}Datasource.delete(entity))
+    }
+
+    async deleteById(id: string | number): Promise<boolean> {
+        return (await this.${ModelName}Datasource.deleteById(id));
+    }
+}`;
+
+const indexModelTemplate = (ModelName) => `import { ${ModelName}Entity } from "./Entity/${ModelName}Entity";
+import { ${ModelName}Repository } from "./Repositories/${ModelName}Repository";
 
 export {
     ${ModelName}Entity,
+    ${ModelName}Repository,
 }`;
 
 const makeCommand = (CommandName) => {
@@ -67,6 +107,13 @@ const makeModel = (ModelName) => {
     fs.mkdirSync(path.join(modelDir, 'Entity'), { recursive: true });
     fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}Entity.ts`), modelTemplate(ModelName), { encoding: 'utf-8' });
     fs.writeFileSync(path.join(modelDir, 'index.ts'), indexModelTemplate(ModelName), { encoding: 'utf-8' });
+    fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
+}
+
+const makeRepository = (ModelName) => {
+    const modelDir = path.join(modelsDir, ModelName);
+    fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
+    fs.writeFileSync(path.join(modelDir, 'Repositories', `${ModelName}Repository.ts`), repositoryTemplate(ModelName), { encoding: 'utf-8' });
     fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
     fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
 }
@@ -80,6 +127,7 @@ if (args[0] === 'new') {
     switch (args[1]) {
         case 'Model':
             makeModel(args[2]);
+            makeRepository(args[2]);
             console.log(pc.green(`${args[2]} Module created succesfully`));
             break;
         case 'Command':
