@@ -2,8 +2,7 @@ import { Configuration } from "../config";
 import { TaoCommand, TaoCommandStringify, commandLoader } from "./Commands";
 import { Client, Events, Guild, IntentsBitField, Interaction, Message, REST, Routes } from "discord.js";
 import { messageManage } from "./Events";
-import { PrismaClient } from "@prisma/client";
-import { NotFoundError } from "@prisma/client/runtime/library";
+import { GuildEntity, GuildPrismaDatasource, GuildRepository } from "./Models/Guild";
 
 
 export class TaoService {
@@ -47,25 +46,10 @@ export class TaoService {
     }
 
     private static async checkServerOnDB(guild: Guild): Promise<void> {
-        const prisma = new PrismaClient();
-        try {
-            const guildAtDB = await prisma.guild.findFirstOrThrow({
-                where: {
-                    guild_id: guild.id
-                },
-            });
-            console.log(guildAtDB.name);
-        } catch (err: unknown) {
-            if (err instanceof NotFoundError) {
-                console.error(`Guild ${guild.name} not found at DB. Adding...`);
-                await prisma.guild.create({
-                    data: {
-                        guild_id: guild.id,
-                        name: guild.name
-                    }
-                });
-            }
+        const guildRepository = new GuildRepository(new GuildPrismaDatasource());
+        const guildAtDB = await guildRepository.getById(guild.id);
+        if (!guildAtDB) {
+            guildRepository.create(new GuildEntity({guild_id: guild.id}));
         }
-        await prisma.$disconnect();
     }
 }

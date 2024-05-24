@@ -13,23 +13,23 @@ export class GuildRepository extends Repository<GuildEntity> {
         return (await this.GuildDatasource.getAll());
     }
 
-    async getById(id: string | number): Promise<GuildEntity> {
+    async getById(id: string | number): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.getById(id));
     }
     
-    async create(entity: GuildEntity): Promise<GuildEntity> {
+    async create(entity: GuildEntity): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.create(entity));
     }
 
-    async update(id: number | string, entity: GuildEntity): Promise<GuildEntity> {
+    async update(id: number | string, entity: GuildEntity): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.update(id, entity));
     }
 
-    async delete(entity: GuildEntity): Promise<GuildEntity> {
+    async delete(entity: GuildEntity): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.delete(entity))
     }
 
-    async deleteById(id: string | number): Promise<GuildEntity> {
+    async deleteById(id: string | number): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.deleteById(id));
     }
 }

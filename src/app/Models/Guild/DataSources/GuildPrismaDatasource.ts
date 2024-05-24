@@ -15,13 +15,13 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
         return condition;
     }
 
-    async getById(id: string | number): Promise<GuildEntity> {
+    async getById(id: string | number): Promise<GuildEntity | null> {
         const condition = this.buildCondition(id);
         let guild = await this.prisma.guild.findUnique({
             where: condition
         });
         if (guild === null) {
-            throw new RepositoryError("Guild not found")
+            return null;
         }
         return GuildEntity.guildFromPrisma(guild);
     }
@@ -32,24 +32,23 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
         return guilds;
     }
 
-    async create(entity: GuildEntity): Promise<GuildEntity> {
+    async create(entity: GuildEntity): Promise<GuildEntity | null> {
         try {
             const guild = await this.prisma.guild.create({
                 data: {
                     ...entity
                 }
             });
-
             return GuildEntity.guildFromPrisma(guild);
         } catch (err: any) {
-            if (err.message.includes('Unique constraint failed')) {
-                throw new RepositoryError('Duplicated Unique Field');
-            }
-            throw new RepositoryError(err.message);
+            // if (err.message.includes('Unique constraint failed')) {
+            //     return null;
+            // }
+            return null;
         }
     }
 
-    async update(id: string | number, entity: GuildEntity): Promise<GuildEntity> {
+    async update(id: string | number, entity: GuildEntity): Promise<GuildEntity | null> {
         let condition = this.buildCondition(id);
         try {
             const guild = await this.prisma.guild.update({
@@ -58,18 +57,18 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
             });
             return GuildEntity.guildFromPrisma(guild);
         } catch (err: any) {
-            if (err.message.includes('not found')) {
-                throw new RepositoryErrorNotFound('Guild Not Found');
-            }
-            throw new RepositoryError(err.message);
+            // if (err.message.includes('not found')) {
+            //     throw new RepositoryErrorNotFound('Guild Not Found');
+            // }
+            return null;
         }
     }
 
-    async delete(entity: GuildEntity): Promise<GuildEntity> {
+    async delete(entity: GuildEntity): Promise<GuildEntity | null> {
         return (await this.deleteById(entity.guild_id));
     }
 
-    async deleteById(id: string | number): Promise<GuildEntity> {
+    async deleteById(id: string | number): Promise<GuildEntity | null> {
         try {
             const condition = this.buildCondition(id);
             const guild = await this.prisma.guild.delete({
@@ -77,10 +76,10 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
             });
             return GuildEntity.guildFromPrisma(guild);
         } catch (err: any) {
-            if (err.message.includes('not found')) {
-                throw new RepositoryErrorNotFound('Guild Not Found');
-            }
-            throw new RepositoryError(err.message);
+            // if (err.message.includes('not found')) {
+            //     throw new RepositoryErrorNotFound('Guild Not Found');
+            // }
+            return null;
         }
     }
 

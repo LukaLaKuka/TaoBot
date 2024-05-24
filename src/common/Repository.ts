@@ -9,12 +9,12 @@ export abstract class Repository<T extends Entity> {
         this.prisma = new PrismaClient();
     }
 
-    abstract getById(id: number | string): Promise<T>;
+    abstract getById(id: number | string): Promise<T | null>;
     abstract getAll(): Promise<T[]>;
-    abstract create(entity: T): Promise<T>;
-    abstract update(id: number | string, entity: T): Promise<T>;
-    abstract delete(entity: T): Promise<T>;
-    abstract deleteById(id: number | string): Promise<T>;
+    abstract create(entity: T): Promise<T | null>;
+    abstract update(id: number | string, entity: T): Promise<T | null>;
+    abstract delete(entity: T): Promise<T | null>;
+    abstract deleteById(id: number | string): Promise<T | null>;
 
     async disconnect() {
         this.prisma.$disconnect();
