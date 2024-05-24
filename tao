@@ -68,23 +68,23 @@ export class ${ModelName}Repository extends Repository<${ModelName}Entity> {
         return (await this.${ModelName}Datasource.getAll());
     }
 
-    async getById(id: string | number): Promise<${ModelName}Entity> {
+    async getById(id: string | number): Promise<${ModelName}Entity | null> {
         return (await this.${ModelName}Datasource.getById(id));
     }
     
-    async create(entity: ${ModelName}Entity): Promise<${ModelName}Entity> {
+    async create(entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
         return (await this.${ModelName}Datasource.create(entity));
     }
 
-    async update(id: number | string, entity: ${ModelName}Entity): Promise<${ModelName}Entity> {
+    async update(id: number | string, entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
         return (await this.${ModelName}Datasource.update(id, entity));
     }
 
-    async delete(entity: ${ModelName}Entity): Promise<boolean> {
+    async delete(entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
         return (await this.${ModelName}Datasource.delete(entity))
     }
 
-    async deleteById(id: string | number): Promise<boolean> {
+    async deleteById(id: string | number): Promise<${ModelName}Entity | null> {
         return (await this.${ModelName}Datasource.deleteById(id));
     }
 }`;
