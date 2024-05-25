@@ -3,12 +3,13 @@ import { GuildEntity } from "..";
 
 export class GuildRepository extends Repository<GuildEntity> {
 
-    constructor(
-        readonly GuildDatasource: Repository<GuildEntity>
-    ) {
-        super()
+    private readonly GuildDatasource: Repository<GuildEntity>;
+
+    constructor(guildDatasource: Repository<GuildEntity>) {
+        super();
+        this.GuildDatasource = guildDatasource;
     }
-    
+
     async getAll(): Promise<GuildEntity[]> {
         return (await this.GuildDatasource.getAll());
     }
@@ -16,7 +17,7 @@ export class GuildRepository extends Repository<GuildEntity> {
     async getById(id: string | number): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.getById(id));
     }
-    
+
     async create(entity: GuildEntity): Promise<GuildEntity | null> {
         return (await this.GuildDatasource.create(entity));
     }
@@ -33,4 +34,3 @@ export class GuildRepository extends Repository<GuildEntity> {
         return (await this.GuildDatasource.deleteById(id));
     }
 }
-

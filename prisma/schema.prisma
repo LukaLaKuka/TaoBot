@@ -11,8 +11,7 @@ datasource db {
 }
 
 model Guild {
-  id           Int           @id @default(autoincrement())
-  guild_id     String        @unique
+  id           String        @id @unique
   modules      Module[]
   rhytms       Rhytm[]
   belovedUsers BelovedUser[]
@@ -29,7 +28,7 @@ model Rhytm {
   name    String          @default("")
   pattern String
   rhytms  RhytmResponse[]
-  guildId Int
+  guildId String
   guild   Guild           @relation(fields: [guildId], references: [id])
 }
 
@@ -42,15 +41,17 @@ model RhytmResponse {
 
 model BelovedUser {
   id       Int    @id @default(autoincrement())
-  userId   Int    @unique
-  user     User   @relation(fields: [guildId], references: [id])
   userName String
-  guildId  Int
+
+
+  userId   String
+  user     User   @relation(fields: [userId], references: [id])
+
+  guildId  String
   guild    Guild  @relation(fields: [guildId], references: [id])
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  userId       String        @unique
+  id       String        @id @unique
   belovedUsers BelovedUser[]
 }

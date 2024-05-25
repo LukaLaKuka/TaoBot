@@ -1,10 +1,10 @@
 import { LovedUserEntity } from "./Entity/LovedUser";
-import { LovedUserRepository, LovedUserRepositoryImplementation } from "./Repositories/LovedUserRepository";
-import { LovedUserJsonHandlerDS } from "./DataSources/LovedUserJsonHandlerDS";
+import { LovedUserPrismaDatasource } from "./DataSources/LovedUserPrismaDatasource";
+import { LovedUserRepository } from "./Repositories/LovedUserRepository";
+
 
 export {
     LovedUserEntity,
-    LovedUserJsonHandlerDS,
+    LovedUserPrismaDatasource,
     LovedUserRepository,
-    LovedUserRepositoryImplementation
 }

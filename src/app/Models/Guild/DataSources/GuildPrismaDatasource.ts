@@ -1,24 +1,14 @@
 import { RepositoryError, RepositoryErrorNotFound } from "../../../../errors";
-import { Repository } from "../../../../common";
+import { PrismaRepository } from "../../../../common";
 import { GuildEntity } from "../Entity/GuildEntity";
 
-export class GuildPrismaDatasource extends Repository<GuildEntity> {
+export class GuildPrismaDatasource extends PrismaRepository<GuildEntity> {
 
-    constructor() {
-        super();
-    }
-
-    private buildCondition(id: number | string) {
-        const condition = typeof id === 'string'
-            ? { guild_id: id as string }
-            : { id: id as number };
-        return condition;
-    }
-
-    async getById(id: string | number): Promise<GuildEntity | null> {
-        const condition = this.buildCondition(id);
+    async getById(id: string): Promise<GuildEntity | null> {
         let guild = await this.prisma.guild.findUnique({
-            where: condition
+            where: {
+                id
+            }
         });
         if (guild === null) {
             return null;
@@ -48,11 +38,12 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
         }
     }
 
-    async update(id: string | number, entity: GuildEntity): Promise<GuildEntity | null> {
-        let condition = this.buildCondition(id);
+    async update(id: string, entity: GuildEntity): Promise<GuildEntity | null> {
         try {
             const guild = await this.prisma.guild.update({
-                where: condition,
+                where: {
+                    id
+                },
                 data: { ...entity }
             });
             return GuildEntity.guildFromPrisma(guild);
@@ -65,14 +56,15 @@ export class GuildPrismaDatasource extends Repository<GuildEntity> {
     }
 
     async delete(entity: GuildEntity): Promise<GuildEntity | null> {
-        return (await this.deleteById(entity.guild_id));
+        return (await this.deleteById(entity.id));
     }
 
-    async deleteById(id: string | number): Promise<GuildEntity | null> {
+    async deleteById(id: string): Promise<GuildEntity | null> {
         try {
-            const condition = this.buildCondition(id);
             const guild = await this.prisma.guild.delete({
-                where: condition
+                where: {
+                    id
+                }
             });
             return GuildEntity.guildFromPrisma(guild);
         } catch (err: any) {

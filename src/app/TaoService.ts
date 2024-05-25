@@ -23,6 +23,7 @@ export class TaoService {
         const servers = client.guilds.cache;
 
         client.on('ready', async () => {
+            await console.log("Loading new guilds...");
             await servers.forEach(async (guild) => {
                 await TaoService.checkServerOnDB(guild);
                 rest.put(Routes.applicationGuildCommands(Configuration.CLIENT_ID, guild.id), { body: this.TaoCommands.textCommands });
@@ -49,7 +50,7 @@ export class TaoService {
         const guildRepository = new GuildRepository(new GuildPrismaDatasource());
         const guildAtDB = await guildRepository.getById(guild.id);
         if (!guildAtDB) {
-            guildRepository.create(new GuildEntity({guild_id: guild.id}));
+            guildRepository.create(new GuildEntity({ ...guild }));
         }
     }
 }
