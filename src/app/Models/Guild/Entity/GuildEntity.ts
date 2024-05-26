@@ -1,11 +1,8 @@
-import { Entity } from "../../../../common";
-
-export class GuildEntity extends Entity {
+export class GuildEntity {
 
     id: string;
 
     constructor(guild: {id: string}) {
-        super()
         this.id = guild.id;
     }
 

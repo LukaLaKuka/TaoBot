@@ -1,10 +1,10 @@
 import { LovedUserEntity } from "./Entity/LovedUser";
-import { LovedUserPrismaDatasource } from "./DataSources/LovedUserPrismaDatasource";
+import { LovedUserPrismaService } from "./Services/LovedUserPrismaService";
 import { LovedUserRepository } from "./Repositories/LovedUserRepository";
 
 
 export {
     LovedUserEntity,
-    LovedUserPrismaDatasource,
+    LovedUserPrismaService,
     LovedUserRepository,
 }

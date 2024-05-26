@@ -1,36 +1,41 @@
-import { Repository } from "../../../../common";
 import { GuildEntity } from "..";
 
-export class GuildRepository extends Repository<GuildEntity> {
+export abstract class IGuildRepository {
+    abstract get(condition?: { where: object }): Promise<GuildEntity[] | null>;
+    abstract getById(id: string): Promise<GuildEntity | null>;
+    abstract create(entity: GuildEntity): Promise<GuildEntity | null>;
+    abstract update(id: string, entity: GuildEntity): Promise<GuildEntity | null>;
+    abstract deleteById(id: string): Promise<GuildEntity | null>;
+    abstract delete(condition?: { where: object }): Promise<void>;
+}
 
-    private readonly GuildDatasource: Repository<GuildEntity>;
+export class GuildRepository extends IGuildRepository {
 
-    constructor(guildDatasource: Repository<GuildEntity>) {
+    constructor(private readonly guildService: IGuildRepository) {
         super();
-        this.GuildDatasource = guildDatasource;
     }
 
-    async getAll(): Promise<GuildEntity[]> {
-        return (await this.GuildDatasource.getAll());
+    async get(condition?: { where: object; } | undefined): Promise<GuildEntity[] | null> {
+        return (await this.guildService.get(condition));
     }
 
-    async getById(id: string | number): Promise<GuildEntity | null> {
-        return (await this.GuildDatasource.getById(id));
+    async getById(id: string): Promise<GuildEntity | null> {
+        return (await this.guildService.getById(id));
     }
 
     async create(entity: GuildEntity): Promise<GuildEntity | null> {
-        return (await this.GuildDatasource.create(entity));
+        return (await this.guildService.create(entity));
     }
 
-    async update(id: number | string, entity: GuildEntity): Promise<GuildEntity | null> {
-        return (await this.GuildDatasource.update(id, entity));
+    async update(id: string, entity: GuildEntity): Promise<GuildEntity | null> {
+        return (await this.guildService.update(id, entity));
     }
 
-    async delete(entity: GuildEntity): Promise<GuildEntity | null> {
-        return (await this.GuildDatasource.delete(entity))
+    async deleteById(id: string): Promise<GuildEntity | null> {
+        return (await this.guildService.deleteById(id));
     }
 
-    async deleteById(id: string | number): Promise<GuildEntity | null> {
-        return (await this.GuildDatasource.deleteById(id));
+    async delete(condition?: { where: object; } | undefined): Promise<void> {
+        await this.guildService.delete(condition);
     }
 }

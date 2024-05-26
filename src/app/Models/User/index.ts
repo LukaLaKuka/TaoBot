@@ -1,9 +1,10 @@
-import { UserPrismaDatasource } from "./DataSources/UserPrismaDatasource";
 import { UserEntity } from "./Entity/UserEntity";
-import { UserRepository } from "./Repositories/UserRepository";
+import { UserRepository, IUserRepository } from "./Repositories/UserRepository";
+import { UserPrismaService } from "./Services/UserPrismaService";
 
 export {
     UserEntity,
     UserRepository,
-    UserPrismaDatasource,
+    IUserRepository,
+    UserPrismaService,
 }

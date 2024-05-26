@@ -44,57 +44,67 @@ export default {
     },
 }`;
 
-const modelTemplate = (ModelName) => `import { Entity } from "../../../../common";
+const modelTemplate = (ModelName) => `export class ${ModelName}Entity {
+    id: string;
 
-export class ${ModelName}Entity extends Entity {
-    
-    constructor() {
-        super()
+    constructor(${ModelName.toLowerCase()}: {id: string}) {
+        this.id = ${ModelName.toLowerCase()}.id;
+    }
+
+    public static ${ModelName.toLowerCase()}FromPrisma(${ModelName.toLowerCase()}: { id: string }): ${ModelName}Entity {
+        return new ${ModelName}Entity(${ModelName.toLowerCase()});
     }
 }`;
 
-const repositoryTemplate = (ModelName) => `import { Repository } from "../../../../common";
-import { ${ModelName}Entity } from "..";
+const repositoryTemplate = (ModelName) => `import { ${ModelName}Entity } from "..";
 
-export class ${ModelName}Repository extends Repository<${ModelName}Entity> {
+export abstract class I${ModelName}Repository {
+    abstract get(condition?: { where: object }): Promise<${ModelName}Entity[] | null>;
+    abstract getById(id: string): Promise<${ModelName}Entity | null>;
+    abstract create(entity: ${ModelName}Entity): Promise<${ModelName}Entity | null>;
+    abstract update(id: string, entity: ${ModelName}Entity): Promise<${ModelName}Entity | null>;
+    abstract deleteById(id: string): Promise<${ModelName}Entity | null>;
+    abstract delete(condition?: { where: object }): Promise<void>;
+}
 
-    constructor(
-        readonly ${ModelName}Datasource: Repository<${ModelName}Entity>
-    ) {
+export class ${ModelName}Repository extends I${ModelName}Repository {
+
+    constructor(private readonly ${ModelName.toLowerCase()}Service: I${ModelName}Repository) {
         super()
     }
-    
-    async getAll(): Promise<${ModelName}Entity[]> {
-        return (await this.${ModelName}Datasource.getAll());
+
+    async get(condition?: { where: object; } | undefined): Promise<${ModelName}Entity[] | null> {
+        return (await this.${ModelName.toLowerCase()}Service.get(condition));
     }
 
-    async getById(id: string | number): Promise<${ModelName}Entity | null> {
-        return (await this.${ModelName}Datasource.getById(id));
+    async getById(id: string): Promise<${ModelName}Entity | null> {
+        return (await this.${ModelName.toLowerCase()}Service.getById(id));
     }
-    
+
     async create(entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
-        return (await this.${ModelName}Datasource.create(entity));
+        return (await this.${ModelName.toLowerCase()}Service.create(entity));
     }
 
-    async update(id: number | string, entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
-        return (await this.${ModelName}Datasource.update(id, entity));
+    async update(id: string, entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
+        return (await this.${ModelName.toLowerCase()}Service.update(id, entity));
     }
 
-    async delete(entity: ${ModelName}Entity): Promise<${ModelName}Entity | null> {
-        return (await this.${ModelName}Datasource.delete(entity))
+    async deleteById(id: string): Promise<${ModelName}Entity | null> {
+        return (await this.${ModelName.toLowerCase()}Service.deleteById(id));
     }
 
-    async deleteById(id: string | number): Promise<${ModelName}Entity | null> {
-        return (await this.${ModelName}Datasource.deleteById(id));
+    async delete(condition?: { where: object; } | undefined): Promise<void> {
+        await this.${ModelName.toLowerCase()}Service.delete(condition);
     }
 }`;
 
 const indexModelTemplate = (ModelName) => `import { ${ModelName}Entity } from "./Entity/${ModelName}Entity";
-import { ${ModelName}Repository } from "./Repositories/${ModelName}Repository";
+import { ${ModelName}Repository, I${ModelName}Repository } from "./Repositories/${ModelName}Repository";
 
 export {
     ${ModelName}Entity,
     ${ModelName}Repository,
+    I${ModelName}Repository,
 }`;
 
 const makeCommand = (CommandName) => {
@@ -106,16 +116,10 @@ const makeModel = (ModelName) => {
     const modelDir = path.join(modelsDir, ModelName);
     fs.mkdirSync(path.join(modelDir, 'Entity'), { recursive: true });
     fs.writeFileSync(path.join(modelDir, 'Entity', `${ModelName}Entity.ts`), modelTemplate(ModelName), { encoding: 'utf-8' });
-    fs.writeFileSync(path.join(modelDir, 'index.ts'), indexModelTemplate(ModelName), { encoding: 'utf-8' });
-    fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
-}
-
-const makeRepository = (ModelName) => {
-    const modelDir = path.join(modelsDir, ModelName);
     fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
     fs.writeFileSync(path.join(modelDir, 'Repositories', `${ModelName}Repository.ts`), repositoryTemplate(ModelName), { encoding: 'utf-8' });
-    fs.mkdirSync(path.join(modelDir, 'Repositories'), { recursive: true });
-    fs.mkdirSync(path.join(modelDir, 'DataSources'), { recursive: true });
+    fs.writeFileSync(path.join(modelDir, 'index.ts'), indexModelTemplate(ModelName), { encoding: 'utf-8' });
+    fs.mkdirSync(path.join(modelDir, 'Services'), { recursive: true });
 }
 
 if (args[0] === undefined || args[0] === 'help') {
@@ -127,7 +131,6 @@ if (args[0] === 'new') {
     switch (args[1]) {
         case 'Model':
             makeModel(args[2]);
-            makeRepository(args[2]);
             console.log(pc.green(`${args[2]} Module created succesfully`));
             break;
         case 'Command':

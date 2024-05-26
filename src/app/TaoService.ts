@@ -2,7 +2,7 @@ import { Configuration } from "../config";
 import { TaoCommand, TaoCommandStringify, commandLoader } from "./Commands";
 import { Client, Events, Guild, IntentsBitField, Interaction, Message, REST, Routes } from "discord.js";
 import { messageManage } from "./Events";
-import { GuildEntity, GuildPrismaDatasource, GuildRepository } from "./Models/Guild";
+import { GuildEntity, GuildPrismaService, GuildRepository } from "./Models/Guild";
 
 
 export class TaoService {
@@ -47,7 +47,7 @@ export class TaoService {
     }
 
     private static async checkServerOnDB(guild: Guild): Promise<void> {
-        const guildRepository = new GuildRepository(new GuildPrismaDatasource());
+        const guildRepository = new GuildRepository(new GuildPrismaService());
         const guildAtDB = await guildRepository.getById(guild.id);
         if (!guildAtDB) {
             guildRepository.create(new GuildEntity({ ...guild }));

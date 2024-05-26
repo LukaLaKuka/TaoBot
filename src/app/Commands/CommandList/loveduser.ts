@@ -1,5 +1,5 @@
-import { UserEntity, UserPrismaDatasource, UserRepository } from "../../Models/User";
-import { LovedUserEntity, LovedUserPrismaDatasource, LovedUserRepository } from "../../Models/LovedUser";
+import { UserPrismaService, UserRepository, UserEntity } from "../../Models/User";
+import { LovedUserEntity, LovedUserPrismaService, LovedUserRepository } from "../../Models/LovedUser";
 import { SlashCommandBuilder, ChatInputCommandInteraction } from "discord.js";
 
 export default {
@@ -45,9 +45,8 @@ export default {
 
         const addUser = async (guildId: string, userId: string, userName: string) => {
 
-            let lovedUserRepo: LovedUserRepository = new LovedUserRepository(new LovedUserPrismaDatasource());
-            let userRepo: UserRepository = new UserRepository(new UserPrismaDatasource());
-
+            let lovedUserRepo: LovedUserRepository = new LovedUserRepository(new LovedUserPrismaService());
+            let userRepo: UserRepository = new UserRepository(new UserPrismaService);
             let userDB = await userRepo.getById(user.id);
 
             if (!userDB) {
@@ -66,15 +65,18 @@ export default {
         }
 
         const deleteUser = async (guildId: string, userId: string) => {
-            let lovedUserRepo: LovedUserPrismaDatasource = new LovedUserPrismaDatasource();
+            let lovedUserRepo: LovedUserRepository = new LovedUserRepository(new LovedUserPrismaService());
 
-            let user = await lovedUserRepo.getByUserAndGuild(guildId, userId);
+            let user = await lovedUserRepo.getById(guildId, userId);
 
             if (!user) {
-                return 'Error deleting user';
+                return 'User is not registered';
             }
 
-            await lovedUserRepo.delete(user);
+            await lovedUserRepo.delete({where: {
+                userId: user.userId,
+                guildId: user.guildId,
+            }})
 
             return 'Loved User removed succesfully';
         }

@@ -1,9 +1,10 @@
 import { GuildEntity } from "./Entity/GuildEntity";
-import { GuildRepository } from "./Repositories/GuildRepository";
-import { GuildPrismaDatasource } from "./DataSources/GuildPrismaDatasource";
+import { GuildRepository, IGuildRepository } from "./Repositories/GuildRepository";
+import { GuildPrismaService } from "./Services/GuildPrismaService";
 
 export {
     GuildEntity,
     GuildRepository,
-    GuildPrismaDatasource,
+    GuildPrismaService,
+    IGuildRepository
 }

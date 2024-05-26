@@ -1,7 +1,6 @@
 import { GuildEntity } from "app/Models/Guild";
-import { Entity } from "../../../../common";
 
-export class LovedUserEntity extends Entity {
+export class LovedUserEntity {
 
     id?: number;
     userId: string;
@@ -10,7 +9,6 @@ export class LovedUserEntity extends Entity {
 
 
     constructor(belovedUser: {id?: number, userId: string, userName: string, guildId: string}) {
-        super();
         this.id = belovedUser.id;
         this.userId = belovedUser.userId;
         this.userName = belovedUser.userName;

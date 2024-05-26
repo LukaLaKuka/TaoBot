@@ -1,11 +1,12 @@
-import { RepositoryError, RepositoryErrorNotFound } from "../../../../errors";
-import { PrismaRepository } from "../../../../common";
-import { GuildEntity } from "../Entity/GuildEntity";
+import { PrismaClient } from "@prisma/client";
+import { GuildEntity, IGuildRepository } from "..";
 
-export class GuildPrismaDatasource extends PrismaRepository<GuildEntity> {
+export class GuildPrismaService extends IGuildRepository {
+
+    private readonly prisma = new PrismaClient()['guild'];
 
     async getById(id: string): Promise<GuildEntity | null> {
-        let guild = await this.prisma.guild.findUnique({
+        let guild = await this.prisma.findUnique({
             where: {
                 id
             }
@@ -16,15 +17,15 @@ export class GuildPrismaDatasource extends PrismaRepository<GuildEntity> {
         return GuildEntity.guildFromPrisma(guild);
     }
 
-    async getAll(): Promise<GuildEntity[]> {
-        let guilds = await this.prisma.guild.findMany();
+    async get(condition?: {where: object}): Promise<GuildEntity[]> {
+        let guilds = await this.prisma.findMany(condition);
         guilds.map(g => GuildEntity.guildFromPrisma(g));
         return guilds;
     }
 
     async create(entity: GuildEntity): Promise<GuildEntity | null> {
         try {
-            const guild = await this.prisma.guild.create({
+            const guild = await this.prisma.create({
                 data: {
                     ...entity
                 }
@@ -40,7 +41,7 @@ export class GuildPrismaDatasource extends PrismaRepository<GuildEntity> {
 
     async update(id: string, entity: GuildEntity): Promise<GuildEntity | null> {
         try {
-            const guild = await this.prisma.guild.update({
+            const guild = await this.prisma.update({
                 where: {
                     id
                 },
@@ -55,13 +56,13 @@ export class GuildPrismaDatasource extends PrismaRepository<GuildEntity> {
         }
     }
 
-    async delete(entity: GuildEntity): Promise<GuildEntity | null> {
-        return (await this.deleteById(entity.id));
+    async delete(condition?: {where: object}): Promise<void> {
+        await this.prisma.deleteMany(condition);
     }
 
     async deleteById(id: string): Promise<GuildEntity | null> {
         try {
-            const guild = await this.prisma.guild.delete({
+            const guild = await this.prisma.delete({
                 where: {
                     id
                 }
