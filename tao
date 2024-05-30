@@ -6,7 +6,7 @@ const args = process.argv.splice(2);
 const pc = require('picocolors');
 
 const modelsDir = path.join(__dirname, 'src/app/Models');
-const commandsDir = path.join(__dirname, 'src/app/Commands/CommandList');
+const commandsDir = path.join(__dirname, 'src/app/Commands/commands');
 
 const help = () => {
     console.log(`${pc.bold('Welcome to Tao CLI. This is the list of commands avaiable:')}`);
