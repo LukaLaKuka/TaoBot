@@ -1,11 +1,17 @@
 export class RhytmEntity {
+    id: number;
     name: string;
     pattern: RegExp;
-    responses: string[];
+    guildId: string;
 
-    constructor(name: string, pattern: string, responses: string[]) {
-        this.name = name;
-        this.pattern = new RegExp(pattern);
-        this.responses = responses;
+    constructor(rhytm: { id: number, name: string, pattern: string, guildId: string }) {
+        this.id = rhytm.id;
+        this.name = rhytm.name;
+        this.pattern = new RegExp(rhytm.pattern);
+        this.guildId = rhytm.guildId;
+    }
+
+    public static rhytmFromPrisma(rhytm: { id: number, name: string, pattern: string, guildId: string }): RhytmEntity {
+        return new RhytmEntity(rhytm);
     }
 }

@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "tsnd --respawn --clear src/index.ts",
     "start": "npm run build && node ./dist/index.js",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "migrate": "prisma migrate dev"
   },
   "author": "Tomhuel",
   "license": "MIT",

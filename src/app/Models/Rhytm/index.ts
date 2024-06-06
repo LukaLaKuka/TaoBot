@@ -1,10 +1,8 @@
 import { RhytmEntity } from "./Entity/RhytmEntity";
-import { RhytmRepository, RhytmRepositoryImplementation } from "./Repositories/RhytmRepository";
-import { RhytmJsonHandlerDS } from "./Services/RhytmJsonHandlerDS";
+import { RhytmRepository, IRhytmRepository } from "./Repositories/RhytmRepository";
 
 export {
     RhytmEntity,
-    RhytmJsonHandlerDS,
-    RhytmRepositoryImplementation,
-    RhytmRepository
+    RhytmRepository,
+    IRhytmRepository,
 }

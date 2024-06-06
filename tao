@@ -73,7 +73,7 @@ export class ${ModelName}Repository extends I${ModelName}Repository {
         super()
     }
 
-    async get(condition?: { where: object; } | undefined): Promise<${ModelName}Entity[] | null> {
+    async get(condition?: { where: object, include?: {} } | undefined): Promise<${ModelName}Entity[] | ${ModelName}Entity | null> {
         return (await this.${ModelName.toLowerCase()}Service.get(condition));
     }
 
